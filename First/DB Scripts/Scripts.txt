@@ -1,0 +1,13 @@
+﻿create database Demo
+
+use Demo
+
+create table info(ID int IDENTITY PRIMARY KEY,Name varchar(50),Appointment varchar(50),Technology varchar(50), Task varchar(MAX) )
+
+Insert into info values ('A.P godse','Software Develpoer','.NET, Database', 'Computer Graphics')
+
+Insert into info values ('yashwant Kanitker','Programmer','.NET, PHP, JSON','Let us C')
+
+Insert into info values ('E balaguruswami','Programmer', '.NET, Javascript','Object Oriented System')
+
+Insert into info values ('R.S, Aggrawal','Software Developer',' Web API, MVC4','Design Analysis and Algorithm')
