@@ -1,7 +1,6 @@
 ﻿using First.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,14 +12,9 @@ namespace First.Controllers
     {
         private readonly UserDbContext _userDbContext;
 
-        public WeatherForecastController(IConfiguration configuration)
+        public WeatherForecastController(UserDbContext userDbContext)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<UserDbContext>();
-
-            var connectionString = configuration["ConnectionStrings:CollegeDBConnectionString"];
-            optionsBuilder.UseSqlServer(connectionString);
-
-            _userDbContext = new UserDbContext(optionsBuilder.Options);
+            _userDbContext = userDbContext;
         }
 
         [HttpGet]
