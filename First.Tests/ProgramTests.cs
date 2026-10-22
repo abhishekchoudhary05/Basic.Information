@@ -1,14 +1,10 @@
-using First;
-using Microsoft.Extensions.Hosting;
-using System;
-using System.Reflection;
 using Xunit;
 
 namespace First.Tests
 {
     /// <summary>
     /// Unit tests for the Program class.
-    /// Tests cover entry point, host building, and configuration.
+    /// Tests cover the generated entry point type and generic host creation.
     /// </summary>
     public class ProgramTests
     {
@@ -20,49 +16,6 @@ namespace First.Tests
 
             // Assert
             Assert.NotNull(programType);
-        }
-
-        [Fact]
-        public void Program_MainMethod_IsEntryPoint()
-        {
-            // Arrange & Act
-            var mainMethod = typeof(Program).GetMethod("Main",
-                BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic,
-                null,
-                new Type[] { typeof(string[]) },
-                null);
-
-            // Assert
-            Assert.NotNull(mainMethod);
-        }
-
-        [Fact]
-        public void Program_StaticMain_CanAcceptNullArgs()
-        {
-            // Arrange
-            var mainMethod = typeof(Program).GetMethod("Main",
-                BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic,
-                null,
-                new Type[] { typeof(string[]) },
-                null);
-
-            // Assert - Main method should accept string array parameter
-            Assert.NotNull(mainMethod);
-            var parameters = mainMethod?.GetParameters();
-            Assert.NotNull(parameters);
-            Assert.Single(parameters);
-            Assert.Equal(typeof(string[]), parameters[0].ParameterType);
-        }
-
-        [Fact]
-        public void Program_CreateHostBuilder_ReturnsIHostBuilder()
-        {
-            // Arrange & Act
-            var method = typeof(Program).GetMethod("CreateHostBuilder",
-                BindingFlags.Public | BindingFlags.Static);
-
-            // Assert
-            Assert.NotNull(method);
         }
 
         [Fact]
@@ -91,28 +44,17 @@ namespace First.Tests
         public void Program_Namespace_IsCorrect()
         {
             // Arrange & Act
-            var programNamespace = typeof(Program).Namespace;
+            var programNamespace = typeof(global::Program).Namespace;
 
             // Assert
-            Assert.Equal("First", programNamespace);
-        }
-
-        [Fact]
-        public void Program_CreateHostBuilder_Exists()
-        {
-            // Act
-            var method = typeof(Program).GetMethod("CreateHostBuilder",
-                BindingFlags.Public | BindingFlags.Static);
-
-            // Assert
-            Assert.NotNull(method);
+            Assert.Null(programNamespace);
         }
 
         [Fact]
         public void Host_CanBeCreatedWithDefaultSettings()
         {
             // Arrange & Act
-            var host = Host.CreateDefaultBuilder().Build();
+            var host = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder().Build();
 
             // Assert
             Assert.NotNull(host);
@@ -123,23 +65,11 @@ namespace First.Tests
         public void Host_CanBeDisposed()
         {
             // Arrange & Act
-            var host = Host.CreateDefaultBuilder().Build();
+            var host = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder().Build();
 
             // Act & Assert
             Assert.NotNull(host);
             host.Dispose();
-        }
-
-        [Fact]
-        public void Program_CanCallMainMethod()
-        {
-            // Arrange
-            var args = Array.Empty<string>();
-
-            // Act & Assert - Verify Main method exists
-            var mainMethod = typeof(Program).GetMethod("Main",
-                BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic);
-            Assert.NotNull(mainMethod);
         }
 
         [Fact]
