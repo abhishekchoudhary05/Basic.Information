@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace First.Models
 {
@@ -7,8 +8,8 @@ namespace First.Models
         [Key]
         public int ID { get; set; }
         public string Name { get; set; }
-        public string Appointment { get; set; }
-        public string Technology { get; set; }
-        public string Task { get; set; }
+        public string Department { get; set; }
+        public Decimal Salary { get; set; }
+        public DateTime JoinedOn { get; set; }
     }
 }

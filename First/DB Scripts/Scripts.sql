@@ -1,41 +1,29 @@
 ﻿-- Database Creation
-CREATE DATABASE BasicInformation;
+CREATE DATABASE LearningDB;
 GO
 
-USE BasicInformation;
+USE LearningDB;
 GO
 
--- Table Creation
-CREATE TABLE Employees (
-    ID INT IDENTITY(1,1) PRIMARY KEY,
-    Name VARCHAR(100) NOT NULL,
-    Appointment VARCHAR(100),
-    Technology VARCHAR(200),
-    Task VARCHAR(MAX)
+DROP TABLE IF EXISTS dbo.Employee;
+GO
+
+-- Create the Employee table
+CREATE TABLE dbo.Employee (
+    ID          INT PRIMARY KEY,
+    Name        NVARCHAR(100) NOT NULL,
+    Department  NVARCHAR(50) NOT NULL,
+    Salary      DECIMAL(10, 2) NOT NULL,
+    JoinedOn    DATE NOT NULL
 );
 GO
 
--- Data Insertion
-INSERT INTO Employees (Name, Appointment, Technology, Task) VALUES
-('A.P. Godse', 'Software Developer', '.NET, Database', 'Computer Graphics');
-
-INSERT INTO Employees (Name, Appointment, Technology, Task) VALUES
-('Yashwant Kanitker', 'Programmer', '.NET, PHP, JSON', 'Let us C');
-
-INSERT INTO Employees (Name, Appointment, Technology, Task) VALUES
-('E. Balaguruswami', 'Programmer', '.NET, Javascript', 'Object Oriented System');
-
-INSERT INTO Employees (Name, Appointment, Technology, Task) VALUES
-('R.S. Aggarwal', 'Software Developer', 'Web API, MVC4', 'Design Analysis and Algorithm');
-
-INSERT INTO Employees (Name, Appointment, Technology, Task) VALUES
-('S. Chand', 'Senior Developer', 'React, Node.js', 'Frontend Development');
-
-INSERT INTO Employees (Name, Appointment, Technology, Task) VALUES
-('Arihant Publications', 'Technical Lead', 'Angular, TypeScript', 'Project Management');
-
-INSERT INTO Employees (Name, Appointment, Technology, Task) VALUES
-('Cengage Learning', 'System Architect', 'Cloud, AWS', 'Infrastructure Design');
-
-INSERT INTO Employees (Name, Appointment, Technology, Task) VALUES
-('O''Reilly Media', 'DevOps Engineer', 'Docker, Kubernetes', 'CI/CD Pipeline');
+-- Insert 6 employee records
+INSERT INTO dbo.Employee (ID, Name, Department, Salary, JoinedOn) VALUES
+(1, 'Aarav Sharma',   'Engineering', 85000.00, '2019-03-15'),
+(2, 'Priya Verma',    'Marketing',   62000.00, '2020-07-01'),
+(3, 'Rohan Gupta',    'Finance',     70000.00, '2018-11-20'),
+(4, 'Neha Singh',     'Engineering', 92000.00, '2017-05-10'),
+(5, 'Vikram Patel',   'Human Resources', 58000.00, '2021-01-25'),
+(6, 'Sneha Reddy',    'Sales',       65000.00, '2022-09-05');
+GO

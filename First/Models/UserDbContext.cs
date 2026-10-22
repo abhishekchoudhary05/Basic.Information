@@ -8,6 +8,6 @@ namespace First.Models
         {
         }
 
-        public DbSet<Information> info { get; set; }
+        public DbSet<Information> Employee { get; set; }
     }
 }
