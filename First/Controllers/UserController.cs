@@ -1,6 +1,7 @@
 using First.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace First.Controllers
@@ -11,10 +12,17 @@ namespace First.Controllers
     {
         private readonly UserDbContext _userDbContext = context;
 
-        [HttpGet]
-        public List<Information> GetInformation()
+        [HttpGet("GetAllEmployees")]
+        public List<Information> GetAllEmployees()
         {
             return _userDbContext.Employee.ToList();
+        }
+
+        [HttpPost("AddEmployee")]
+        public bool SaveEmployee(Information information)
+        {
+            _userDbContext.Employee.Add(information);
+            return _userDbContext.SaveChanges() == 1;
         }
     }
 }

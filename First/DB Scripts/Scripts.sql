@@ -10,7 +10,7 @@ GO
 
 -- Create the Employee table
 CREATE TABLE dbo.Employee (
-    ID          INT PRIMARY KEY,
+    ID          INT IDENTITY(1,1) PRIMARY KEY,
     Name        NVARCHAR(100) NOT NULL,
     Department  NVARCHAR(50) NOT NULL,
     Salary      DECIMAL(10, 2) NOT NULL,
