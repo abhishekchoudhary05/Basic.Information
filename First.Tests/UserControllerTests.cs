@@ -41,6 +41,48 @@ public class UserControllerTests
     }
 
     [Fact]
+    public void SaveEmployee_AddsEmployeeAndReturnsTrue()
+    {
+        using var context = CreateContext();
+        var employee = new Information
+        {
+            ID = 10,
+            Name = "Casey",
+            Department = "Finance",
+            Salary = 90000,
+            JoinedOn = new DateTime(2022, 4, 1)
+        };
+
+        var result = new UserController(context).SaveEmployee(employee);
+
+        Assert.True(result);
+        var saved = context.Employee.Find(10);
+        Assert.NotNull(saved);
+        Assert.Equal("Casey", saved.Name);
+        Assert.Equal("Finance", saved.Department);
+        Assert.Equal(90000, saved.Salary);
+        Assert.Equal(new DateTime(2022, 4, 1), saved.JoinedOn);
+    }
+
+    [Fact]
+    public void SaveEmployees_AddsAllEmployeesAndReturnsTrue()
+    {
+        using var context = CreateContext();
+        var employees = new List<Information>
+        {
+            new() { ID = 11, Name = "Jordan", Department = "Sales", Salary = 70000 },
+            new() { ID = 12, Name = "Taylor", Department = "Operations", Salary = 85000 }
+        };
+
+        var result = new UserController(context).SaveEmployees(employees);
+
+        Assert.True(result);
+        Assert.Equal(2, context.Employee.Count());
+        Assert.Contains(context.Employee, item => item.ID == 11 && item.Name == "Jordan");
+        Assert.Contains(context.Employee, item => item.ID == 12 && item.Name == "Taylor");
+    }
+
+    [Fact]
     public void UpdateEmployeeSalary_UpdatesOnlyProvidedFields()
     {
         var options = new DbContextOptionsBuilder<UserDbContext>()
@@ -118,5 +160,14 @@ public class UserControllerTests
         var result = new UserController(context).RemoveEmployees(404);
 
         Assert.False(result);
+    }
+
+    private static UserDbContext CreateContext()
+    {
+        var options = new DbContextOptionsBuilder<UserDbContext>()
+            .UseInMemoryDatabase(Guid.NewGuid().ToString())
+            .Options;
+
+        return new UserDbContext(options);
     }
 }
